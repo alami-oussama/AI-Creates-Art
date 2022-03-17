@@ -15,15 +15,21 @@ def load_dataset(dataset_path, img_size):
     print('loading data...\n')
     data = []
     images = os.listdir(dataset_path)
-    print(f'Number of artworks found: {len(images)}')
+    num_images = len(images)
+    print(f'Number of artworks found: {num_images}')
     print('Processing images, this will take a few minutes........')
     for img in tqdm(images, ncols=100):
-        img_path = os.path.join(dataset_path, img)
-        img_array = cv2.imread(img_path)
-        resized_img = cv2.resize(img_array, img_size)
-        data.append(resized_img / 255)
+        try:
+            img_path = os.path.join(dataset_path, img)
+            img_array = cv2.imread(img_path)
+            resized_img = cv2.resize(img_array, img_size)
+            data.append(resized_img / 255)
+        except:
+            continue
     np.random.shuffle(data)
-    print('Processing succeeded!')
+    num_succeeded_images = len(data)
+    num_missing_images = num_images - num_succeeded_images
+    print(f'Finish processing! {num_succeeded_images} processed, {num_missing_images}')
     return data
 
 # Save generated images
