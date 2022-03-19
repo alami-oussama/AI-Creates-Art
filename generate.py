@@ -29,8 +29,10 @@ def load_dataset(dataset_path, img_size):
     np.random.shuffle(data)
     num_succeeded_images = len(data)
     num_missing_images = num_images - num_succeeded_images
-    print(f'Finish processing! {num_succeeded_images} processed, {num_missing_images}')
-    return data
+    print(f'Finish processing! {num_succeeded_images} processed, {num_missing_images} missing')
+    # Convert the data into TensorFlow Dataset object
+    training_dataset = tf.data.Dataset.from_tensor_slices(data).batch(batch_size)
+    return training_dataset
 
 # Save generated images
 def save_images(generator, noise, output_path):
@@ -220,8 +222,7 @@ if __name__ == '__main__':
         save_images(generator, fixed_seed, output_path)
     except:
         # load training dataset
-        data = load_dataset(dataset_path, IMG_SIZE)
-        training_dataset = tf.data.Dataset.from_tensor_slices(data).batch(batch_size)
+        training_dataset = load_dataset(dataset_path, IMG_SIZE)
 
         # define optimizers
         generator_optimizer = tf.keras.optimizers.Adam(1.2e-4, 0.5)
