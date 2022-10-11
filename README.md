@@ -5,7 +5,7 @@ Generating artworks using [Generative Adversarial Networks (GANs)](https://arxiv
 # Install
 
 ```bash
-git https://github.com/Oussama2IA/AI-Creates-Art.git
+git https://github.com/alami-oussama/AI-Creates-Art.git
 cd AI-Creates-Art
 pip install -r requirements.txt
 ```
